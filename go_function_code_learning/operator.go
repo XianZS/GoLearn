@@ -15,4 +15,5 @@ func main() {
 	fmt.Println("judgement:", judgement)
 	nums := strings.Split(scanner.Text(), " ")
 	fmt.Printf("nums: %v\n", nums)
+
 }
