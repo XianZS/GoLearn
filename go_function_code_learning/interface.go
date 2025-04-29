@@ -51,6 +51,9 @@ type people interface {
 	getName() string
 	getAge() int
 	getAddress() string
+	setName(name string) bool
+	setAge(age int) bool
+	setAddress(address string) bool
 }
 
 // Student 定义一个 Student 结构体
@@ -72,6 +75,21 @@ func (stu Student) getAddress() string {
 	return stu.address
 }
 
+func (stu Student) setName(name string) bool {
+	stu.name = name
+	return true
+}
+
+func (stu Student) setAge(age int) bool {
+	stu.age = age
+	return true
+}
+
+func (stu Student) setAddress(address string) bool {
+	stu.address = address
+	return true
+}
+
 func main() {
 	fmt.Println("Go interface using:")
 	stu := Student{name: "jom", age: 123, address: "ShangHai"}
@@ -79,4 +97,8 @@ func main() {
 	fmt.Println(stu.getName())
 	fmt.Println(stu.getAge())
 	fmt.Println(stu.getAddress())
+	stu.setName("kom")
+	stu.setAge(123)
+	stu.setAddress("BeiJing")
+	fmt.Println(stu.getName(), stu.getAge(), stu.getAddress())
 }
