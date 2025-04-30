@@ -29,6 +29,11 @@ package main
 		Go 通过 range 关键字来实现遍历读取到的数据，类似于与数组或切片。格式如下：
 		如果通道接收不到数据后 ok 就为 false，这时通道就可以使用 close() 函数来关闭。
 		v, ok := <-ch
+		需要注意的是，通道是可以被垃圾回收机制回收的，它和关闭文件是不一样的，在结束操作之后关闭文件是必须要做的，但关闭通道不是必须的。
+		在向通道中加入若干个元素之后，我们可以通过 close 函数来关闭通道来告知从该通道接收值的 goroutine 停止等待
+		如果不适用close函数关闭通道，那么在接收方会一直阻塞，那么range就会报错，如下：
+			// 死锁
+			// fatal error: all goroutines are asleep - deadlock!
 	(2)select的使用:
 		select 语句使得一个 goroutine 可以等待多个通信操作。select 会阻塞，直到其中的某个 case 可以继续执行：
 */
@@ -49,7 +54,7 @@ func main() {
 	// 启动主Routine通道
 	for i := 0; i < 10; i++ {
 		fmt.Printf("---%v\n", i+1)
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(10 * time.Millisecond)
 	}
 	// （2）Channel使用
 	fmt.Println("Please enter some numbers that use space split it:")
@@ -58,7 +63,12 @@ func main() {
 	noWithBufferChannel(ch)
 	// 带缓冲区的通道
 	ch1 := make(chan int, 100)
+	fmt.Println("--- withBufferChannel ---")
 	withBufferChannel(ch1)
+	fmt.Println("--- goRoutineRange ---")
+	goRoutineRange()
+	fmt.Println("--- selectChannel ---")
+	selectChannel()
 }
 
 func goRoutine() {
@@ -66,7 +76,7 @@ func goRoutine() {
 	// Go test Routine
 	for i := 0; i < 10; i++ {
 		fmt.Printf("***%v\n", i+1)
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(10 * time.Millisecond)
 	}
 }
 
@@ -106,12 +116,24 @@ func sum(s []int, c chan int) {
 	c <- sum
 }
 
-func goRoutineRange(ch chan int) {
-	for {
-		v, ok := <-ch
-		if !ok {
-			break
-		}
-		fmt.Println(v)
+func goRoutineRange() {
+	ch3 := make(chan int, 100)
+	ch3 <- 1
+	ch3 <- 2
+	ch3 <- 3
+	close(ch3)
+	for i := range ch3 {
+		fmt.Println(i)
 	}
+}
+
+func selectChannel() {
+	c := make(chan int)
+	quit := make(chan int)
+	go func() {
+		for i := 0; i < 10; i++ {
+			fmt.Println(<-c)
+		}
+		quit <- 0
+	}()
 }
