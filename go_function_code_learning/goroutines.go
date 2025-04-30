@@ -24,6 +24,13 @@ package main
     G：Goroutine。
     M：系统线程（Machine）。
     P：逻辑处理器（Processor）。
+5.补充：
+	(1)range的使用:
+		Go 通过 range 关键字来实现遍历读取到的数据，类似于与数组或切片。格式如下：
+		如果通道接收不到数据后 ok 就为 false，这时通道就可以使用 close() 函数来关闭。
+		v, ok := <-ch
+	(2)select的使用:
+		select 语句使得一个 goroutine 可以等待多个通信操作。select 会阻塞，直到其中的某个 case 可以继续执行：
 */
 
 import (
@@ -97,4 +104,14 @@ func sum(s []int, c chan int) {
 		sum += v
 	}
 	c <- sum
+}
+
+func goRoutineRange(ch chan int) {
+	for {
+		v, ok := <-ch
+		if !ok {
+			break
+		}
+		fmt.Println(v)
+	}
 }
