@@ -4,13 +4,15 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 )
 
 func main() {
 	fmt.Println("Go file code using:")
-	var fileName string
 	fmt.Println("请输入文件名:")
-	_, _ = fmt.Scan(&fileName)
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	fileName := scanner.Text()
 	// [1]创建文件
 	//createFile(fileName)
 	// [2]打开和关闭文件
@@ -99,25 +101,29 @@ func readFileAllMethod(fileName string) {
 	首先，我们打开文件并创建一个 bufio.Writer 对象。然后，我们逐行写入文件，最后使用 Flush 方法将缓冲区中的内容写入文件。
 */
 func writeLineFile(fileName string) {
-	fileObj, _ := os.Open("./" + fileName + ".txt")
+	fileObj, _ := os.OpenFile("./"+fileName+".txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
 	defer func(fileObj *os.File) {
 		_ = fileObj.Close()
 	}(fileObj)
 	writer := bufio.NewWriter(fileObj)
-	var c int
-	fmt.Println("Please input how many line you want to write:")
-	_, _ = fmt.Scanln(&c)
-	fmt.Println(c)
+	fmt.Printf("Please input how many line you want to write:")
 	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	c, _ := strconv.Atoi(scanner.Text())
 	for i := 0; i < c; i++ {
+		fmt.Println("please input line:")
 		scanner.Scan()
-		_, err := fmt.Fprintln(writer, scanner.Text())
+		lineObj := scanner.Text()
+		fmt.Println(lineObj)
+		fprintln, err := fmt.Fprintln(writer, lineObj)
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println(fprintln)
 			return
-		} else {
-			/* pass */
 		}
-		_ = writer.Flush()
+		err2 := writer.Flush()
+		if err2 != nil {
+			fmt.Println(err2)
+			return
+		}
 	}
 }
