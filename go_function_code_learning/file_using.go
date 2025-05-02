@@ -23,6 +23,16 @@ func main() {
 	readFileAllMethod(fileName)
 	// [5]逐行写入文件
 	writeLineFile(fileName)
+	// [6]删除文件
+	deleteFile()
+	// [7]获取文件信息
+	getFileInformation(fileName)
+	// [8]创建目录
+	createDir()
+	// [9]读取目录下的内容
+	readDir()
+	// [10]删除目录
+	deleteDir()
 }
 
 /*
@@ -125,5 +135,128 @@ func writeLineFile(fileName string) {
 			fmt.Println(err2)
 			return
 		}
+	}
+}
+
+/*
+文件操作方式6 >>> 删除文件
+
+	Go 语言提供了多种删除文件的方式，包括删除单个文件、删除目录等。
+	在这个例子中，我们使用 os.Remove 函数删除文件。
+	首先，我们创建一个文件，然后使用 os.Remove 函数删除文件。
+	如果删除文件时出错，我们打印错误信息并返回。否则，我们打印删除文件成功的信息。
+*/
+func deleteFile() {
+	fileObj, _ := os.Create("./test.txt")
+	_ = fileObj.Close()
+	err := os.Remove("./test.txt")
+	if err != nil {
+		fmt.Println(err)
+		return
+	} else {
+		fmt.Println("Delete text.txt success!")
+	}
+}
+
+/*
+文件操作方式7 >>> 文件信息操作
+文件名:  myFileName.txt
+文件大小:        100
+文件权限:        -rw-rw-rw-
+文件修改时间:    2025-05-02 13:11:35.2489903 +0800 CST
+文件是否是目录:  false
+文件系统:        &{32 {343202337 31177168} {2901580719 31177504} {2901580719 31177504} 0 100}
+*/
+func getFileInformation(fileName string) {
+	fileObj, _ := os.Stat("./" + fileName + ".txt")
+	fmt.Println("文件名:\t", fileObj.Name())
+	fmt.Println("文件大小:\t", fileObj.Size())
+	fmt.Println("文件权限:\t", fileObj.Mode())
+	fmt.Println("文件修改时间:\t", fileObj.ModTime())
+	fmt.Println("文件是否是目录:\t", fileObj.IsDir())
+	fmt.Println("文件系统:\t", fileObj.Sys())
+}
+
+/*
+文件操作方式8 >>> 创建目录
+
+	Go 语言提供了多种创建目录的方式，包括创建单个目录、创建多级目录等。
+	在这个例子中，我们使用 os.Mkdir 函数创建目录。
+	首先，我们创建一个目录，然后使用 os.Mkdir 函数创建目录。
+	如果创建目录时出错，我们打印错误信息并返回。否则，我们打印创建目录成功的信息。
+*/
+func createDir() {
+	// 创建单个目录
+	err := os.Mkdir("testDir", 0755)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	// 创建多级目录
+	err = os.MkdirAll("testDir/testDir2", 0755)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+}
+
+/*
+文件操作方式9 >>> 读取目录下的内容
+conference.go
+container.go
+err.go
+file_make.go
+file_using.go
+for_function.go
+func.go
+goroutines.go
+hello.go
+ifelse.go
+iii.txt
+input.go
+interface.go
+lambda_function.go
+language_transformation.go
+logic_judgement.go
+map.go
+myFile.txt
+myFileName.txt
+myFileOne.txt
+operator.go
+ptr_nil.go
+recursion.go
+revalues.go
+slice.go
+split_strings.go
+struct.go
+switch.go
+testDir
+type_switch.go
+typeof.go
+variable.go
+variable_scope.go
+*/
+func readDir() {
+	// 读取目录
+	dirObj, _ := os.ReadDir("./")
+	for _, entry := range dirObj {
+		info, _ := entry.Info()
+		fmt.Println(info.Name())
+	}
+}
+
+/*
+文件操作方式10 >>> 删除目录
+*/
+func deleteDir() {
+	err := os.RemoveAll("./testDir")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	err = os.RemoveAll("./testDir/testDir2")
+	if err != nil {
+		fmt.Println(err)
+		return
 	}
 }
