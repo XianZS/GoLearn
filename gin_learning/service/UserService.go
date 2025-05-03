@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+	"fmt"
 )
 
 var userList []pojo.User
@@ -13,7 +14,10 @@ var userList []pojo.User
 func FindAllUser(c *gin.Context) {
 	// 传入参数: nil
 	// 传入方式：nil
-	c.JSON(http.StatusOK, userList)
+	users:=pojo.FindAllUsers()
+	fmt.Println("*********")
+	fmt.Println(users)
+	c.JSON(http.StatusOK, users)
 }
 
 // PostUser POST User

@@ -2,11 +2,18 @@ package main
 
 import "github.com/gin-gonic/gin"
 import "GoLearn/gin_learning/src"
+import "GoLearn/gin_learning/database"
 
 func main() {
 	ginObj := gin.Default()
 	v1 := ginObj.Group("/")
 	src.AddUserRouter(v1)
+
+
+	go func(){
+		database.DD()
+	}()
+
 	_ = ginObj.Run()
 }
 
