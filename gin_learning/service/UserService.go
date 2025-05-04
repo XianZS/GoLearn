@@ -20,7 +20,7 @@ func FindAllUser(c *gin.Context) {
 	c.JSON(http.StatusOK, users)
 }
 
-// PostUser POST User
+// PostUser POST User:增加用户
 func PostUser(c *gin.Context) {
 	// 传入参数：user对象JSON格式
 	// 传入方式：request.body
@@ -30,11 +30,11 @@ func PostUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, "Error")
 		return
 	}
-	userList = append(userList, user)
-	c.JSON(http.StatusOK, "Successfully posted!")
+	newUser := pojo.CreateUser(user)
+	c.JSON(http.StatusOK, newUser)
 }
 
-// DeleteUser DELETE User
+// DeleteUser DELETE User:删除用户
 func DeleteUser(c *gin.Context) {
 	// 传入参数：userId
 	// 传入方式：URL参数
@@ -42,17 +42,16 @@ func DeleteUser(c *gin.Context) {
 	// 比如说，路由为 /users/some，那么当传入路由为 /users/some/123 时，
 	// c.Param("id") 会返回 "123"。
 	userId, _ := strconv.Atoi(c.Param("UserId"))
-	for i, u := range userList {
-		if u.UserId == userId {
-			userList = append(userList[:i], userList[i+1:]...)
-			c.JSON(http.StatusOK, "Successfully deleted!")
-			return
-		}
+	delUser := pojo.DeleteUser(userId)
+	if delUser.UserId == 0 {
+		c.JSON(http.StatusNotFound, "Not Found")
+		return
+	} else {
+		c.JSON(http.StatusOK, "Successfully delete")
 	}
-	c.JSON(http.StatusNotFound, "Error")
 }
 
-// PutUser PUT User
+// PutUser PUT User:修改用户
 func PutUser(c *gin.Context) {
 	// 传入参数：userId, user对象JSON格式
 	// 传入方式：URL参数, request.body
@@ -65,12 +64,6 @@ func PutUser(c *gin.Context) {
 		return
 	}
 	userId, _ := strconv.Atoi(c.Param("UserId"))
-	for i, u := range userList {
-		if u.UserId == userId {
-			userList[i] = before
-			c.JSON(http.StatusOK, "Successfully put!")
-			return
-		}
-	}
-	c.JSON(http.StatusNotFound, "Error")
+	newUser := pojo.UpdateUser(userId, before)
+	c.JSON(http.StatusNotFound, newUser)
 }

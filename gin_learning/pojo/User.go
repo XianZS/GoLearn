@@ -20,3 +20,19 @@ func FindAllUsers() []User {
 	fmt.Println("=========")
 	return users
 }
+
+func CreateUser(user User) User {
+	database.DBconnect.Create(&user)
+	return user
+}
+
+func DeleteUser(userId int) User {
+	user := User{}
+	database.DBconnect.Where("user_id=?", userId).Delete(&user)
+	return user
+}
+
+func UpdateUser(userId int, user User) User {
+	database.DBconnect.Where("user_id=?", userId).Updates(&user)
+	return user
+}
