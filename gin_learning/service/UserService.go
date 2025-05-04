@@ -2,10 +2,10 @@ package service
 
 import (
 	"GoLearn/gin_learning/pojo"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
-	"fmt"
 )
 
 var userList []pojo.User
@@ -14,7 +14,7 @@ var userList []pojo.User
 func FindAllUser(c *gin.Context) {
 	// 传入参数: nil
 	// 传入方式：nil
-	users:=pojo.FindAllUsers()
+	users := pojo.FindAllUsers()
 	fmt.Println("*********")
 	fmt.Println(users)
 	c.JSON(http.StatusOK, users)
