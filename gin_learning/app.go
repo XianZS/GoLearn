@@ -1,20 +1,60 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"fmt"
+	"github.com/gin-gonic/gin"
+	"io"
+	"os"
+	"time"
+)
 import "GoLearn/gin_learning/src"
 import "GoLearn/gin_learning/database"
 
+var logName string = getTime()
+
 func main() {
+	// 创建日志对象
+	setUpLogging()
+	// 创建一个服务
 	ginObj := gin.Default()
-	v1 := ginObj.Group("/")
+	// 全局
+	// 创建v1路由组
+	v1 := ginObj.Group("/v1")
+	v1.Use()
+	// 创建v2路由组
+	v2 := ginObj.Group("/v2")
+	v2.Use()
 	src.AddUserRouter(v1)
-
-
-	go func(){
+	go func() {
 		database.DD()
 	}()
 
 	_ = ginObj.Run()
+}
+func getTime() string {
+	// 获取当前时间
+	// 格式化为字符串
+	// 返回字符串
+	nowTime := time.Now()
+	return nowTime.Format("2006_01_02_15_04_05")
+}
+
+func setUpLogging() {
+	fmt.Println("++++++++++++++++++++++++++")
+	// 将logName按照空格分开，并且加和在一起
+	logName = "./logs/" + logName + ".log"
+	fmt.Println(logName)
+	//if err := os.MkdirAll(filepath.Dir(logName), os.ModePerm); err != nil {
+	//	panic(fmt.Sprintf("创建日志目录失败: %v", err))
+	//}
+
+	f, err := os.Create(logName)
+	if err != nil {
+		panic(fmt.Sprintf("创建日志文件失败: %v", err))
+	}
+
+	fmt.Println("++++++++++++++++++++++++++")
+	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 }
 
 //func main() {

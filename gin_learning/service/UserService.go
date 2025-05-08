@@ -42,8 +42,8 @@ func DeleteUser(c *gin.Context) {
 	// 比如说，路由为 /users/some，那么当传入路由为 /users/some/123 时，
 	// c.Param("id") 会返回 "123"。
 	userId, _ := strconv.Atoi(c.Param("UserId"))
-	delUser := pojo.DeleteUser(userId)
-	if delUser.UserId == 0 {
+	delRow := pojo.DeleteUser(userId)
+	if delRow == 0 {
 		c.JSON(http.StatusNotFound, "Not Found")
 		return
 	} else {
@@ -64,6 +64,10 @@ func PutUser(c *gin.Context) {
 		return
 	}
 	userId, _ := strconv.Atoi(c.Param("UserId"))
+	fmt.Println("______________________________")
+	fmt.Println(userId)
+	fmt.Println(before)
+	fmt.Println("______________________________")
 	newUser := pojo.UpdateUser(userId, before)
-	c.JSON(http.StatusNotFound, newUser)
+	c.JSON(http.StatusOK, newUser)
 }

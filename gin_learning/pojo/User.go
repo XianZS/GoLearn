@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-type User struct {
+type User struct { // Users
 	UserId       int    `json:"userId"`
 	UserName     string `json:"userName"`
 	UserPassWord string `json:"userPassword"`
@@ -26,10 +26,10 @@ func CreateUser(user User) User {
 	return user
 }
 
-func DeleteUser(userId int) User {
+func DeleteUser(userId int) int {
 	user := User{}
-	database.DBconnect.Where("user_id=?", userId).Delete(&user)
-	return user
+	result := database.DBconnect.Where("user_id=?", userId).Delete(&user)
+	return int(result.RowsAffected)
 }
 
 func UpdateUser(userId int, user User) User {

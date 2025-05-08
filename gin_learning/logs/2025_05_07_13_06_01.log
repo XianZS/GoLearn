@@ -1,0 +1,18 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /users/FindAllUser        --> GoLearn/gin_learning/service.FindAllUser (3 handlers)
+[GIN-debug] POST   /users/PostUser           --> GoLearn/gin_learning/service.PostUser (3 handlers)
+[GIN-debug] DELETE /users/DeleteUser/:UserId --> GoLearn/gin_learning/service.DeleteUser (3 handlers)
+[GIN-debug] PUT    /users/PutUser/:UserId    --> GoLearn/gin_learning/service.PutUser (3 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Environment variable PORT is undefined. Using port :8080 by default
+[GIN-debug] Listening and serving HTTP on :8080
+[GIN] 2025/05/07 - 13:08:27 | 200 |      7.6362ms |       127.0.0.1 | POST     "/users/PostUser"
+[GIN] 2025/05/07 - 13:08:34 | 200 |      1.2839ms |       127.0.0.1 | GET      "/users/FindAllUser"
+[GIN] 2025/05/07 - 13:08:57 | 200 |      6.3782ms |       127.0.0.1 | DELETE   "/users/DeleteUser/5"
+[GIN] 2025/05/07 - 13:10:40 | 200 |      1.0255ms |       127.0.0.1 | GET      "/users/FindAllUser"

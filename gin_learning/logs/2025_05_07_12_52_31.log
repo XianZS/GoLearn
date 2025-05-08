@@ -1,0 +1,33 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /users/FindAllUser        --> GoLearn/gin_learning/service.FindAllUser (3 handlers)
+[GIN-debug] POST   /users/PostUser           --> GoLearn/gin_learning/service.PostUser (3 handlers)
+[GIN-debug] DELETE /users/DeleteUser/:UserId --> GoLearn/gin_learning/service.DeleteUser (3 handlers)
+[GIN-debug] PUT    /users/PutUser/:UserId    --> GoLearn/gin_learning/service.PutUser (3 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Environment variable PORT is undefined. Using port :8080 by default
+[GIN-debug] Listening and serving HTTP on :8080
+[GIN] 2025/05/07 - 12:53:16 | 200 |      8.6222ms |       127.0.0.1 | GET      "/users/FindAllUser"
+[GIN] 2025/05/07 - 12:53:21 | 200 |      4.9075ms |       127.0.0.1 | POST     "/users/PostUser"
+[GIN] 2025/05/07 - 12:53:25 | 200 |      6.6665ms |       127.0.0.1 | PUT      "/users/PutUser/2"
+[GIN] 2025/05/07 - 12:54:47 | 200 |      6.5087ms |       127.0.0.1 | PUT      "/users/PutUser/2"
+[GIN] 2025/05/07 - 12:54:48 | 200 |      6.5014ms |       127.0.0.1 | PUT      "/users/PutUser/2"
+[GIN] 2025/05/07 - 12:54:53 | 200 |      5.8719ms |       127.0.0.1 | POST     "/users/PostUser"
+[GIN] 2025/05/07 - 12:54:54 | 200 |      3.7907ms |       127.0.0.1 | POST     "/users/PostUser"
+[GIN] 2025/05/07 - 12:54:55 | 200 |      5.7442ms |       127.0.0.1 | POST     "/users/PostUser"
+[GIN] 2025/05/07 - 12:55:54 | 200 |      1.0635ms |       127.0.0.1 | GET      "/users/FindAllUser"
+[GIN] 2025/05/07 - 12:56:00 | 404 |      6.0922ms |       127.0.0.1 | DELETE   "/users/DeleteUser/6"
+[GIN] 2025/05/07 - 12:56:01 | 404 |       549.9µs |       127.0.0.1 | DELETE   "/users/DeleteUser/6"
+[GIN] 2025/05/07 - 12:56:02 | 404 |       993.3µs |       127.0.0.1 | DELETE   "/users/DeleteUser/6"
+[GIN] 2025/05/07 - 12:56:03 | 404 |      1.5493ms |       127.0.0.1 | DELETE   "/users/DeleteUser/6"
+[GIN] 2025/05/07 - 12:56:04 | 404 |       601.1µs |       127.0.0.1 | DELETE   "/users/DeleteUser/6"
+[GIN] 2025/05/07 - 12:56:05 | 404 |       623.7µs |       127.0.0.1 | DELETE   "/users/DeleteUser/6"
+[GIN] 2025/05/07 - 12:57:18 | 200 |       506.1µs |       127.0.0.1 | GET      "/users/FindAllUser"
+[GIN] 2025/05/07 - 12:57:28 | 404 |      6.0922ms |       127.0.0.1 | DELETE   "/users/DeleteUser/5"
+[GIN] 2025/05/07 - 12:57:32 | 200 |      6.2442ms |       127.0.0.1 | POST     "/users/PostUser"
+[GIN] 2025/05/07 - 12:57:35 | 200 |      1.1771ms |       127.0.0.1 | GET      "/users/FindAllUser"
