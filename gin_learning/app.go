@@ -1,13 +1,13 @@
 package main
 
 import (
+	"GoLearn/gin_learning/src"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"io"
 	"os"
 	"time"
 )
-import "GoLearn/gin_learning/src"
 import "GoLearn/gin_learning/database"
 
 var logName string = getTime()
@@ -17,18 +17,22 @@ func main() {
 	setUpLogging()
 	// 创建一个服务
 	ginObj := gin.Default()
-	// 全局
 	// 创建v1路由组
 	v1 := ginObj.Group("/v1")
-	v1.Use()
+	// 设置v1路由组的中间件
+	v1.Use(v1Middleware())
+	// 将v1路由组作为参数传入src.AddUserRouter()函数中
+	src.AddUserRouterV1(v1)
 	// 创建v2路由组
 	v2 := ginObj.Group("/v2")
-	v2.Use()
-	src.AddUserRouter(v1)
+	// 设置v2路由组的中间件
+	v2.Use(v2Middleware())
+	// 将v2路由组作为参数传入src.AddUserRouter()函数中
+	src.AddUserRouterV2(v2)
+	// 启动数据库服务
 	go func() {
 		database.DD()
 	}()
-
 	_ = ginObj.Run()
 }
 func getTime() string {
@@ -55,6 +59,20 @@ func setUpLogging() {
 
 	fmt.Println("++++++++++++++++++++++++++")
 	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
+}
+
+func v1Middleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		fmt.Println("v1 middleware")
+		c.Next()
+	}
+}
+
+func v2Middleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		fmt.Println("v2 middleware")
+		c.Next()
+	}
 }
 
 //func main() {

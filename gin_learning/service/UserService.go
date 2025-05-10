@@ -71,3 +71,9 @@ func PutUser(c *gin.Context) {
 	newUser := pojo.UpdateUser(userId, before)
 	c.JSON(http.StatusOK, newUser)
 }
+
+func Read(c *gin.Context) {
+	// 传入参数: nil
+	// 传入方式：nil
+	c.String(http.StatusOK, "Read is success!")
+}

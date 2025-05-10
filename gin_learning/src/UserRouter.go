@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AddUserRouter(r *gin.RouterGroup) {
+func AddUserRouterV1(r *gin.RouterGroup) {
 	// 创建总路由组
 	user := r.Group("/users")
 	// 得到所有用户信息
