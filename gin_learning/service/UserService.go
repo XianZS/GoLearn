@@ -91,3 +91,9 @@ func LoginUser(c *gin.Context) {
 		"sessionId": middlewares.GetSessionID(c),
 	})
 }
+
+func RedisUser(c *gin.Context) {
+	id := c.Param("id")
+	user := pojo.User{}
+
+}
