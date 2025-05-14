@@ -1,6 +1,7 @@
 package service
 
 import (
+	"GoLearn/gin_learning/middlewares"
 	"GoLearn/gin_learning/pojo"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -76,4 +77,17 @@ func Read(c *gin.Context) {
 	// 传入参数: nil
 	// 传入方式：nil
 	c.String(http.StatusOK, "Read is success!")
+}
+
+func LoginUser(c *gin.Context) {
+	userId, _ := strconv.Atoi(c.PostForm("userId"))
+	password := c.PostForm("passWord")
+	fmt.Println(userId)
+	fmt.Println(password)
+	middlewares.SaveSession(c, userId)
+	c.JSON(http.StatusOK, gin.H{
+		"userId":    userId,
+		"password":  password,
+		"sessionId": middlewares.GetSessionID(c),
+	})
 }
